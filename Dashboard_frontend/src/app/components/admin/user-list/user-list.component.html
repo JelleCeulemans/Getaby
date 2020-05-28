@@ -1,0 +1,167 @@
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+  <!-- Main Content -->
+  <div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+      <br />
+      <br />
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h3 class="m-0 font-weight-bold">Werknemers bij {{ companyname }}</h3>
+          <br />
+          <button type="button" class="btn btn-info" (click)="open(addUser, null)"
+            routerLinkActive="router-link-active">
+            Gebruiker toevoegen
+          </button>
+        </div>
+        <div class="card-body">
+          <input class="form-control w-50" [(ngModel)]="searchText" placeholder="Naam" />
+          <br />
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Naam</th>
+                  <th>Personeelsnummer</th>
+                  <th>Rol</th>
+                  <th colspan="2">Acties</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let user of allUsers | nameFilter: searchText">
+                <tr>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.employeeNumber }}</td>
+                  <td>{{ user.role.name }}</td>
+                  <td>
+                    <button type="button" placement="top" ngbTooltip="Gegevens van de gebruiker aanpassen" class="btn btn-success ml-2 mr-2" (click)="open(content, user)">
+                      <fa name="edit"></fa>
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" placement="top" ngbTooltip="Gebruiker verwijderen" class="btn btn-danger ml-2 mr-2" (click)="open(delete, user)">
+                      <fa name="trash"></fa>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+<ng-template #content let-modal class="modal fade">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div class="form-group">
+          <label for="name">Naam</label>
+          <input type="text" class="form-control" id="name" name="name" [(ngModel)]="user.name" />
+        </div>
+        <div class="form-group">
+          <label for="employeeNumber">Personeelsnummer</label>
+          <input type="text" class="form-control" id="employeeNumber" name="employeeNumber"
+            [(ngModel)]="user.employeeNumber" />
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" [checked]="user.role.name === 'Admin'" id="admin"
+            (change)="changeRole($event)" />
+          <label class="form-check-label" for="admin">Admin</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="onEditUser(); modal.close()">
+      Wijzig gebruiker
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #addUser let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title font-weight-bold" id="modal-basic-title">
+      Nieuwe gebruiker aanmaken
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form (ngSubmit)="onSubmit(); modal.close()" [formGroup]="registerForm">
+    <div class="modal-body">
+      <h6>Welke soort gebruiker</h6>
+      <div *ngFor="let role of allRoles">
+        <label class="radio">
+          <input class="mr-2" type="radio" name="role" [value]="role" formControlName="role" />
+          <span>{{ role.name }}</span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+          </div>
+          <input type="text" id="personeelsnummer" class="form-control" formControlName="employeeNumber" required="required" placeholder="Personeelsnummer"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+          </div>
+          <input class="form-control" placeholder="Naam" type="text" name="name" id="name" required
+                 formControlName="name" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+          </div>
+          <input class="form-control" placeholder="Wachtwoord" required minlength="6" type="password" name="password"
+                 id="password" required formControlName="password" />
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-info" type="submit" [disabled]="!registerForm.valid">
+        Registreer
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #delete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">werknemer verwijderen</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="text-center">Ben je zeker dat je deze werknemer wil verwijderen ?</p>
+    <ul>
+      <li><b>Naam:</b> {{user.name}}</li>
+      <li><b>Personeelsnummer:</b> {{user.employeeNumber}}</li>
+      <li><b>Rol:</b> {{user.role.name}}</li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteUser(); modal.close()">Verwijderen</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">Annuleren</button>
+  </div>
+</ng-template>

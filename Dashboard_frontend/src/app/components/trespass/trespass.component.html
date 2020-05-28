@@ -1,0 +1,81 @@
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+  <!-- Main Content -->
+  <div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+      <!-- Page Heading -->
+      <br />
+      <br />
+      <!-- DataTales Example -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h3 class="m-0 font-weight-bold">Overtredingen</h3>
+          <br />
+        </div>
+        <div class="card-body">
+          <input type="date" class="form-control datepicker" [(ngModel)]="searchDate" />
+          <br />
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Moment</th>
+                  <th>Camera</th>
+                  <th>Foto</th>
+                  <th colspan="2">Actie</th>
+
+                </tr>
+              </thead>
+              <tbody *ngFor="let trespass of trespassesNoArchive | dateFilter: searchDate">
+                <tr fxLayoutAlign="center center">
+                  <td>{{ trespass.moment | date: "dd/MM/yyyy HH:mm:ss" }}</td>
+                  <td>{{ trespass.camera.name }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info" (click)="showImage(image, trespass.path)" placement="top" ngbTooltip="Foto van de overtreding weergeven">
+                      <fa name="image"></fa>
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-info" placement="top" ngbTooltip="Overtreding toevoegen aan het archief" (click)="addToArchive(trespass)"><fa name="archive"></fa></button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger" placement="top" ngbTooltip="Overtreding verwijderen" (click)="delete(trespass.trespassID)">
+                      <fa name="trash"></fa>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of Main Content -->
+  <!-- Footer -->
+  <footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+      <div class="copyright text-center my-auto">
+        <span>Copyright &copy; Getaby</span>
+      </div>
+    </div>
+  </footer>
+
+  <ng-template #image let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Overtreding</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <img [src]="url" width="450px" />
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close()">
+        Sluiten
+      </button>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,143 @@
+<div id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <!-- Sidebar - Brand -->
+      <li>
+        <a routerLink="/dashboard" routerLinkActive="active"
+          class="sidebar-brand d-flex align-items-center justify-content-center">
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">Aperam <sup>Genk</sup></div>
+        </a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0" />
+
+      <li class="nav-item active" *ngIf="isAuthenticated$ | async">
+        <div class="nav-link collapsed">Welkom, {{user}}</div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0" />
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active" *ngIf="isAuthenticated$ | async">
+        <a routerLink="/dashboard" routerLinkActive="active" class="nav-link collapsed">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+      <div *ngIf="(roles$ | async).Supervisor">
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Supervisor
+        </div>
+
+        <li class="nav-item">
+          <a routerLink="/trespass" routerLinkActive="active" class="nav-link collapsed">
+            <i class="fa fa-table mr-2"></i>
+            <span>Overtredingen</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/admin/archief" routerLinkActive="active" class="nav-link collapsed">
+            <i class="fa fa-table mr-2"></i>
+            <span>Archief</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/outprint" routerLinkActive="active" class="nav-link collapsed">
+            <i class="fa fa-file mr-2"></i>
+            <span>Rapport uitprinten</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/admin/bedrijf" routerLinkActive="active" class="nav-link collapsed">
+            <i class="fa fa-building mr-2"></i>
+            <span>Bedrijfsgegevens</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" (click)="logout()" class="nav-link collapsed">
+            <fa name="cog" class="mr-2"></fa>
+            <span>Uitloggen</span>
+          </a>
+        </li>
+      </div>
+
+      <div *ngIf="(roles$ | async).Admin">
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Admin
+        </div>
+
+        <li class="nav-item">
+          <a routerLink="/trespass" routerLinkActive="active" class="nav-link collapsed">
+            <i class="fa fa-table mr-2"></i>
+            <span>Overtredingen</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/admin/archief" routerLinkActive="active" class="nav-link collapsed">
+            <i class="fa fa-table mr-2"></i>
+            <span>Archief</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/outprint" routerLinkActive="active" class="nav-link collapsed">
+            <i class="fa fa-file mr-2"></i>
+            <span>Rapport uitprinten</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/admin/bedrijf" routerLinkActive="active" class="nav-link collapsed">
+            <i class="fa fa-building mr-2"></i>
+            <span>Bedrijfsgegevens</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/admin/GebruikerLijst" routerLinkActive="active" class="nav-link collapsed">
+            <i class="fa fa-address-book mr-2"></i>
+            <span>Gebruikers beheren</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/camera" routerLinkActive="active" class="nav-link collapsed">
+            <i class="fa fa-camera mr-2"></i>
+            <span>Camera's</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/admin/site" routerLinkActive="active" class="nav-link collapsed">
+            <fa name="location-arrow mr-2"></fa>
+            <span>Sites</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" (click)="logout()" class="nav-link collapsed">
+            <i class="fa fa-cog mr-2"></i>
+            <span>Uitloggen</span>
+          </a>
+        </li>
+      </div>
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block" />
+    </ul>
+    <!-- End of Sidebar -->
+    <div style="display: block; margin: auto;">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+</div>

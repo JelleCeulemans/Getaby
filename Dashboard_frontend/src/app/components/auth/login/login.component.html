@@ -1,0 +1,33 @@
+<div class="card o-hidden border-0 shadow-lg ml-5 mb-5 mr-5" id="login">
+  <div class="card-body p-0">
+    <!-- Nested Row within Card Body -->
+    <div class="row">
+      <div class="col-lg-12 p-5">
+          <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">Welkom terug!</h1>
+          </div>
+            <form [formGroup]="loginForm">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                  </div>
+                  <input type="text" id="personeelsnummer" class="form-control" formControlName="employeeNumber" required="required" placeholder="Personeelsnummer"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                  </div>
+                  <input type="password" id="password" class="form-control" formControlName="password" required="required" placeholder="Wachtwoord"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary d-block w-100" (click)="submit()">Login</button>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>

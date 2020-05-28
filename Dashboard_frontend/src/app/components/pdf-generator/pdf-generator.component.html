@@ -1,0 +1,23 @@
+
+<div>
+
+  <div class="form-group">
+    <label for="year">Selecteer een jaar</label>
+    <select class="form-control" id="year" *ngIf="years" (change)="changeYear($event)">
+      <option value="0">Kies jaar</option>
+      <option *ngFor="let year of years" [value]="year">{{year}}</option>
+    </select>
+  </div>
+
+  <div class="form-group" *ngIf="showMonth">
+    <label for="year">Selecteer een maand</label>
+    <select class="form-control" id="month" (change)="changeMonth($event)">
+      <option value="0">Kies een maand</option>
+      <option *ngFor="let month of monthsNumbers" [value]="month">{{monthsText[month - 1]}}</option>
+    </select>
+  </div>
+  <div *ngIf="showButton">
+    <button class="btn btn-warning" (click)="generate()">Genereer rapport</button>
+  </div>
+</div>
+
