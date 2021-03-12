@@ -27,7 +27,7 @@
     "chartjs-plugin-datalabels": "^0.7.0",
     "font-awesome": "^4.7.0",
     "ftp-client": "^0.2.2",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "jspdf-autotable": "^3.2.11",
     "ng2-charts": "^2.3.0",
     "rxjs": "~6.4.0",
